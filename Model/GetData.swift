@@ -64,12 +64,12 @@ struct CountryStruct {
 
 
 
-func getData() {
+func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escaping() -> Void, serverErrorCallBack: @escaping() -> Void) {
     let urlString = "https://restcountries.com/v2/all"
     let configuration = URLSessionConfiguration.ephemeral
     let session = URLSession(configuration: configuration)
     guard let url = URL(string: urlString) else {
-        print("Жопа")
+        serverErrorCallBack()
         return
     }
     let task = session.dataTask(with: url) { (data, response, error) in
@@ -105,29 +105,20 @@ func getData() {
                 cioc.append(countryInfo[index].cioc ?? "")
                 independent.append(countryInfo[index].independent)
             }
-        } catch let error {
-            print(error)
+        } catch _ {
+            JSONerrorAlertCallBack()
         }
-        print(languages[0].name)
-        print(languages[1].name)
-        print(languages[2].name)
-
+        completion()
     }
     task.resume()
 }
 
-func sortArrays() {
-    var sortedCountries = [CountryStruct]()
-    for index in 0..<name.count {
-        sortedCountries.append(CountryStruct(name: name[index], topLevelDomain: topLevelDomain[index], alpha2Code: alpha2Code[index], alpha3Code: alpha3Code[index], callingCodes: callingCodes[index], capital: capital[index], altSpellings: altSpellings[index], region: region[index], continent: continent[index], population: population[index], latlng: latlng[index], demonym: demonym[index], area: area[index], gini: gini[index], timezones: timezones[index], borders: borders[index], nativeName: nativeName[index], numericCode: numericCode[index], currencies: currencies[index], languages: languages[index], translations: translations[index], flags: flags[index], regionalBlocs: regionalBlocs[index], cioc: cioc[index], independent: independent[index]))
+final class Countries {
+    static func sortArrays(JSONerrorAlertCallBack: @escaping() -> Void) -> [CountryStruct] {
+        var sortedCountries = [CountryStruct]()
+        for index in 0..<name.count {
+            sortedCountries.append(CountryStruct(name: name[index], topLevelDomain: topLevelDomain[index], alpha2Code: alpha2Code[index], alpha3Code: alpha3Code[index], callingCodes: callingCodes[index], capital: capital[index], altSpellings: altSpellings[index], region: region[index], continent: continent[index], population: population[index], latlng: latlng[index], demonym: demonym[index], area: area[index], gini: gini[index], timezones: timezones[index], borders: borders[index], nativeName: nativeName[index], numericCode: numericCode[index], currencies: currencies[index], languages: languages[index], translations: translations[index], flags: flags[index], regionalBlocs: regionalBlocs[index], cioc: cioc[index], independent: independent[index]))
+        }
+        return sortedCountries
     }
-//    sortedCountries = sortedCountries.sorted { item1, item2 in
-//        item1.name < item2.name
-//    }
-    print(sortedCountries[246].name)
-    print(sortedCountries[246].languages)
-    for index in 0..<sortedCountries.count {
-        print("\(sortedCountries[index].name) \(sortedCountries[index].capital) \(sortedCountries[index].population) \(sortedCountries[index].name)")
-    }
-    print(sortedCountries)
 }
