@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,8 @@
 		0A0C94EB26FF3E1A00C637BD /* AllCountriesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C94E926FF3E1A00C637BD /* AllCountriesApp.xcdatamodeld */; };
 		0A0C94ED26FF3E2200C637BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A0C94EC26FF3E2200C637BD /* Assets.xcassets */; };
 		0A0C94F026FF3E2200C637BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0C94EE26FF3E2200C637BD /* LaunchScreen.storyboard */; };
+		0A0C94FD26FF3EDB00C637BD /* JSON Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C94FC26FF3EDB00C637BD /* JSON Model.swift */; };
+		0A0C950026FF406D00C637BD /* GetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0C94FF26FF406D00C637BD /* GetData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		0A0C94EC26FF3E2200C637BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A0C94EF26FF3E2200C637BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A0C94F126FF3E2200C637BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A0C94FC26FF3EDB00C637BD /* JSON Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON Model.swift"; sourceTree = "<group>"; };
+		0A0C94FF26FF406D00C637BD /* GetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +46,7 @@
 		0A0C94D426FF3E1900C637BD = {
 			isa = PBXGroup;
 			children = (
+				0A0C94FA26FF3EBD00C637BD /* Model */,
 				0A0C94DF26FF3E1900C637BD /* AllCountriesApp */,
 				0A0C94DE26FF3E1900C637BD /* Products */,
 			);
@@ -68,6 +73,15 @@
 				0A0C94E926FF3E1A00C637BD /* AllCountriesApp.xcdatamodeld */,
 			);
 			path = AllCountriesApp;
+			sourceTree = "<group>";
+		};
+		0A0C94FA26FF3EBD00C637BD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0A0C94FC26FF3EDB00C637BD /* JSON Model.swift */,
+				0A0C94FF26FF406D00C637BD /* GetData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,7 +119,7 @@
 				};
 			};
 			buildConfigurationList = 0A0C94D826FF3E1900C637BD /* Build configuration list for PBXProject "AllCountriesApp" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -141,6 +155,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A0C94E526FF3E1900C637BD /* ViewController.swift in Sources */,
+				0A0C94FD26FF3EDB00C637BD /* JSON Model.swift in Sources */,
+				0A0C950026FF406D00C637BD /* GetData.swift in Sources */,
 				0A0C94E126FF3E1900C637BD /* AppDelegate.swift in Sources */,
 				0A0C94EB26FF3E1A00C637BD /* AllCountriesApp.xcdatamodeld in Sources */,
 				0A0C94E326FF3E1900C637BD /* SceneDelegate.swift in Sources */,
