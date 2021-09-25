@@ -129,4 +129,5 @@ func sortArrays() {
     for index in 0..<sortedCountries.count {
         print("\(sortedCountries[index].name) \(sortedCountries[index].capital) \(sortedCountries[index].population) \(sortedCountries[index].name)")
     }
+    print(sortedCountries)
 }
