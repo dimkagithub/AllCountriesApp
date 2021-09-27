@@ -8,17 +8,37 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
     @IBOutlet weak var countryName: UILabel!
     @IBOutlet weak var countryFlag: UIImageView!
+    @IBOutlet weak var countryPopulation: UILabel!
+    
     
     var name = String()
     var image = String()
+    var population = Int()
+    var languages = [String]()
+    var topLevelDomain = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        self.title = name
         countryName.text = name
-        countryFlag.image = UIImage(named: image)
-        print(image)
+        countryFlag.downloadImageFrom(link: image)
+//        countryPopulation.text = ("Население: \(String(population))")
+
+//        for item in languages {
+//            countryPopulation.text = item
+//        }
+        countryPopulation.text = languages.joined(separator: ", ")
+        countryPopulation.text = topLevelDomain
+        
+        
+        
+//        for index in 0..<languages.count {
+//            print(languages)
+//        }
         
 
         // Do any additional setup after loading the view.

@@ -10,10 +10,7 @@ import SystemConfiguration
 
 class TableViewController: UITableViewController {
     
-    var allcountries = [CountryStruct]()
-    
 
-    
     func isInternetAvailable() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
@@ -55,17 +52,15 @@ class TableViewController: UITableViewController {
         
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        self.title = "Обновление..."
+        self.title = "Все страны"
+        
         getData {
             DispatchQueue.main.async {
-                self.allcountries = Countries.sortArrays(
-                    JSONerrorAlertCallBack: {
-                        self.showJSONerrorAlert()
-                    })
+   
+                
                 self.tableView.reloadData()
             }
         } JSONerrorAlertCallBack: {
@@ -78,8 +73,7 @@ class TableViewController: UITableViewController {
             }
         }
     }
-    
-
+        
     override func numberOfSections(in tableView: UITableView) -> Int {
 
         return 1
@@ -87,33 +81,36 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return  allcountries.count
+        return  allcountrues.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         
-        cell.countryName.text = allcountries[indexPath.row].name
-        cell.countryFlag.downloadImageFrom(link: allcountries[indexPath.row].flags)
-        
-        
-        
+        cell.countryName.text = allcountrues[indexPath.row].name
         
         return cell
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         if segue.identifier == "ShowCountryInfo" {
-             let controller = segue.destination as! ViewController
-             if let index = tableView.indexPathForSelectedRow {
-                let country = allcountries[index.row]
+        if segue.identifier == "ShowCountryInfo" {
+            let controller = segue.destination as! ViewController
+            if let index = tableView.indexPathForSelectedRow {
+                let country = allcountrues[index.row]
                 controller.name = country.name
-                controller.image = country.flags
-             }
-         }
-     }
+                controller.image = country.flags[1]
+                controller.population = country.population
+                for index in 0..<country.languages.count {
+                    controller.languages.append(contentsOf: [country.languages[index].name])
+                }
+                for index in 0..<country.topLevelDomain.count {
+                    controller.topLevelDomain.append(country.topLevelDomain[index])
+                }
+            }
+        }
+    }
     
 
     /*

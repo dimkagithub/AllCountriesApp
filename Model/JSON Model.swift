@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct CountryElement: Codable {
+struct CountryElement: Decodable {
     let name: String
     let topLevelDomain: [String]
     let alpha2Code: String
@@ -63,7 +63,7 @@ struct CountryElement: Codable {
     }
 }
 
-enum Continent: String, Codable {
+enum Continent: String, Decodable {
     case africa = "Africa"
     case americas = "Americas"
     case antarctic = "Antarctic"
@@ -74,7 +74,7 @@ enum Continent: String, Codable {
     case polar = "Polar"
 }
 
-struct Currency: Codable {
+struct Currency: Decodable {
     let code: String
     let name: String
     let symbol: String
@@ -86,7 +86,7 @@ struct Currency: Codable {
     }
 }
 
-struct Language: Codable {
+struct Language: Decodable {
     let iso6391: String?
     let iso6392: String
     let name: String
@@ -100,7 +100,7 @@ struct Language: Codable {
     }
 }
 
-struct RegionalBloc: Codable {
+struct RegionalBloc: Decodable {
     let acronym: Acronym
     let name: Name
     let otherNames: [OtherName]?
@@ -114,7 +114,7 @@ struct RegionalBloc: Codable {
     }
 }
 
-enum Acronym: String, Codable {
+enum Acronym: String, Decodable {
     case al = "AL"
     case asean = "ASEAN"
     case au = "AU"
@@ -131,7 +131,7 @@ enum Acronym: String, Codable {
     case no = ""
 }
 
-enum Name: String, Codable {
+enum Name: String, Decodable {
     case africanUnion = "African Union"
     case arabLeague = "Arab League"
     case associationOfSoutheastAsianNations = "Association of Southeast Asian Nations"
@@ -148,7 +148,7 @@ enum Name: String, Codable {
     case no = ""
 }
 
-enum OtherAcronym: String, Codable {
+enum OtherAcronym: String, Decodable {
     case eaeu = "EAEU"
     case sica = "SICA"
     case unasul = "UNASUL"
@@ -157,7 +157,7 @@ enum OtherAcronym: String, Codable {
     case no = ""
 }
 
-enum OtherName: String, Codable {
+enum OtherName: String, Decodable {
     case accordDeLibreÉchangeNordAméricain = "Accord de Libre-échange Nord-Américain"
     case alianzaDelPacífico = "Alianza del Pacífico"
     case caribischeGemeenschap = "Caribische Gemeenschap"
@@ -180,7 +180,7 @@ enum OtherName: String, Codable {
     case no = ""
 }
 
-struct Translations: Codable {
+struct Translations: Decodable {
     let br: String
     let pt: String
     let nl: String?
