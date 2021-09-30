@@ -8,51 +8,71 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var mainCountryInfoView: UIView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var flag: UIImageView!
+    @IBOutlet weak var countryTableVew: UITableView!
     
-    @IBOutlet weak var countryName: UILabel!
-    @IBOutlet weak var countryFlag: UIImageView!
-    @IBOutlet weak var countryPopulation: UILabel!
-    
-    
-    var name = String()
-    var image = String()
-    var population = Int()
-    var languages = [String]()
-    var topLevelDomain = String()
+    var countryInfo = [[String]]()
+    var countryName = String()
+    var countryFlag = String()
+    var countryTitle = [
+        "Top level domain",
+        "Alpha 2 code",
+        "Alpha 3 code",
+        "Calling codes",
+        "Capital",
+        "Alt spellings",
+        "Subregion",
+        "Region",
+        "Population",
+        "Latitude, longitude",
+        "Demonym",
+        "Area",
+        "GINI",
+        "Time zones",
+        "Borders",
+        "Native name",
+        "Numeric code",
+        "Currency",
+        "Languages",
+        "Translations",
+        "Regional Blocs",
+        "CIOC",
+        "Independent"
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        countryTableVew.delegate = self
+        countryTableVew.dataSource = self
+        countryTableVew.separatorStyle = .none
+        countryTableVew.showsVerticalScrollIndicator = false
         overrideUserInterfaceStyle = .light
-        self.title = name
-        countryName.text = name
-        countryFlag.downloadImageFrom(link: image)
-//        countryPopulation.text = ("Население: \(String(population))")
+        mainCountryInfoView.layer.cornerRadius = mainCountryInfoView.frame.width / 50
+        mainCountryInfoView.layer.borderWidth = 0.1
+        self.title = countryName
+        name.text = countryName
+        flag.downloadImageFrom(link: countryFlag)
+    }
+}
 
-//        for item in languages {
-//            countryPopulation.text = item
-//        }
-        countryPopulation.text = languages.joined(separator: ", ")
-        countryPopulation.text = topLevelDomain
-        
-        
-        
-//        for index in 0..<languages.count {
-//            print(languages)
-//        }
-        
-
-        // Do any additional setup after loading the view.
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countryInfo.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = countryTableVew.dequeueReusableCell(withIdentifier: "CustomCell") as! ViewControllerCell
+        cell.countryView.layer.cornerRadius = cell.countryView.frame.width / 50
+        cell.countryView.layer.borderWidth = 0.1
+        cell.countryTitle.text = countryTitle[indexPath.row]
+        cell.countryInfo.text = countryInfo[indexPath.row].joined(separator: ", ")
+        return cell
+    }
 }

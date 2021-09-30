@@ -15,8 +15,8 @@ struct CountryElement: Decodable {
     let callingCodes: [String]
     let capital: String?
     let altSpellings: [String]?
-    let region: String
-    let continent: Continent
+    let subregion: String
+    let region: Region
     let population: Int
     let latlng: [Double]?
     let demonym: String?
@@ -26,14 +26,15 @@ struct CountryElement: Decodable {
     let borders: [String]?
     let nativeName: String
     let numericCode: String
+    let flags: Flags
     let currencies: [Currency]?
     let languages: [Language]
     let translations: Translations
-    let flags: [String]
+    let flag: String
     let regionalBlocs: [RegionalBloc]?
     let cioc: String?
     let independent: Bool
-
+    
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case topLevelDomain = "topLevelDomain"
@@ -42,8 +43,8 @@ struct CountryElement: Decodable {
         case callingCodes = "callingCodes"
         case capital = "capital"
         case altSpellings = "altSpellings"
+        case subregion = "subregion"
         case region = "region"
-        case continent = "continent"
         case population = "population"
         case latlng = "latlng"
         case demonym = "demonym"
@@ -53,17 +54,54 @@ struct CountryElement: Decodable {
         case borders = "borders"
         case nativeName = "nativeName"
         case numericCode = "numericCode"
+        case flags = "flags"
         case currencies = "currencies"
         case languages = "languages"
         case translations = "translations"
-        case flags = "flags"
+        case flag = "flag"
         case regionalBlocs = "regionalBlocs"
         case cioc = "cioc"
         case independent = "independent"
     }
 }
 
-enum Continent: String, Decodable {
+struct Currency: Decodable {
+    let code: String
+    let name: String
+    let symbol: String
+    
+    enum CodingKeys: String, CodingKey {
+        case code = "code"
+        case name = "name"
+        case symbol = "symbol"
+    }
+}
+
+struct Flags: Decodable {
+    let svg: String
+    let png: String
+    
+    enum CodingKeys: String, CodingKey {
+        case svg = "svg"
+        case png = "png"
+    }
+}
+
+struct Language: Decodable {
+    let iso6391: String?
+    let iso6392: String
+    let name: String
+    let nativeName: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case iso6391 = "iso639_1"
+        case iso6392 = "iso639_2"
+        case name = "name"
+        case nativeName = "nativeName"
+    }
+}
+
+enum Region: String, Decodable {
     case africa = "Africa"
     case americas = "Americas"
     case antarctic = "Antarctic"
@@ -74,38 +112,12 @@ enum Continent: String, Decodable {
     case polar = "Polar"
 }
 
-struct Currency: Decodable {
-    let code: String
-    let name: String
-    let symbol: String
-
-    enum CodingKeys: String, CodingKey {
-        case code = "code"
-        case name = "name"
-        case symbol = "symbol"
-    }
-}
-
-struct Language: Decodable {
-    let iso6391: String?
-    let iso6392: String
-    let name: String
-    let nativeName: String?
-
-    enum CodingKeys: String, CodingKey {
-        case iso6391 = "iso639_1"
-        case iso6392 = "iso639_2"
-        case name = "name"
-        case nativeName = "nativeName"
-    }
-}
-
 struct RegionalBloc: Decodable {
     let acronym: Acronym
     let name: Name
     let otherNames: [OtherName]?
     let otherAcronyms: [OtherAcronym]?
-
+    
     enum CodingKeys: String, CodingKey {
         case acronym = "acronym"
         case name = "name"
@@ -128,7 +140,6 @@ enum Acronym: String, Decodable {
     case pa = "PA"
     case saarc = "SAARC"
     case usan = "USAN"
-    case no = ""
 }
 
 enum Name: String, Decodable {
@@ -145,7 +156,6 @@ enum Name: String, Decodable {
     case pacificAlliance = "Pacific Alliance"
     case southAsianAssociationForRegionalCooperation = "South Asian Association for Regional Cooperation"
     case unionOfSouthAmericanNations = "Union of South American Nations"
-    case no = ""
 }
 
 enum OtherAcronym: String, Decodable {
@@ -154,7 +164,6 @@ enum OtherAcronym: String, Decodable {
     case unasul = "UNASUL"
     case unasur = "UNASUR"
     case uzan = "UZAN"
-    case no = ""
 }
 
 enum OtherName: String, Decodable {
@@ -177,7 +186,6 @@ enum OtherName: String, Decodable {
     case uniónDeNacionesSuramericanas = "Unión de Naciones Suramericanas"
     case الاتحادالأفريقي = "الاتحاد الأفريقي"
     case جامعةالدولالعربية = "جامعة الدول العربية"
-    case no = ""
 }
 
 struct Translations: Decodable {
@@ -192,7 +200,7 @@ struct Translations: Decodable {
     let ja: String?
     let it: String?
     let hu: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case br = "br"
         case pt = "pt"
@@ -207,5 +215,3 @@ struct Translations: Decodable {
         case hu = "hu"
     }
 }
-
-typealias Country = [CountryElement]
