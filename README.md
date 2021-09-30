@@ -18,6 +18,10 @@
 
 <p align="center">
   
+  <img src="https://github.com/dimkagithub/AllCountriesApp/raw/main/Screenshots/countries_list.png" style="width:50%;">
+  <br>
+  <img src="https://github.com/dimkagithub/AllCountriesApp/raw/main/Screenshots/country_info.png" style="width:50%;">
+  
 </p>
 
 </body>
