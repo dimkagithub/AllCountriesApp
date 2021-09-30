@@ -7,7 +7,7 @@
 
 import UIKit
 
-var allcountrues = [CountryElement]()
+var allCountries = [CountryElement]()
 
 func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escaping() -> Void, serverErrorCallBack: @escaping() -> Void) {
     let urlString = "https://restcountries.com/v2/all"
@@ -21,7 +21,7 @@ func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escapin
         guard let data = data else { return }
         guard error == nil else { return }
         do {
-            allcountrues = try JSONDecoder().decode([CountryElement].self, from: data)
+            allCountries = try JSONDecoder().decode([CountryElement].self, from: data)
         } catch _ {
             JSONerrorAlertCallBack()
         }
@@ -29,3 +29,14 @@ func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escapin
     }
     task.resume()
 }
+
+extension UIImageView {
+    func downloadImageFrom(link: String) {
+        URLSession.shared.dataTask(with: URL(string: link)!) { (data, response, error) in
+            DispatchQueue.main.async {
+                guard let data = data else { return }
+                self.image = UIImage(data: data)
+            }
+        }.resume()
+    }
+}   
