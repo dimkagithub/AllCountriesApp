@@ -17,29 +17,29 @@ class ViewController: UIViewController {
     var countryName = String()
     var countryFlag = String()
     var countryTitle = [
+        "Native name",
         "Top level domain",
         "Alpha 2 code",
         "Alpha 3 code",
         "Calling codes",
+        "CIOC",
+        "Independent",
+        "Status",
+        "UN member",
+        "Currency",
+        "Country code",
         "Capital",
         "Alt spellings",
-        "Subregion",
         "Region",
-        "Population",
-        "Latitude, longitude",
-        "Demonym",
-        "Area",
-        "GINI",
-        "Time zones",
-        "Borders",
-        "Native name",
-        "Numeric code",
-        "Currency",
+        "Subregion",
         "Languages",
         "Translations",
-        "Regional Blocs",
-        "CIOC",
-        "Independent"
+        "Latitude, longitude",
+        "Landlocked",
+        "Borders",
+        "Area",
+        "Demonym",
+        "Population"
     ]
     
     override func viewDidLoad() {

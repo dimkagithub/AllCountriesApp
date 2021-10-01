@@ -11,6 +11,12 @@ import SystemConfiguration
 class TableViewController: UITableViewController {
     
     var filteredCountries = [CountryElement]()
+    var nativeName = [String]()
+    var languages = [String]()
+    var countryCode = [String]()
+    var translate = [String]()
+    var latLong = [String]()
+    var currency = [String]()
     var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -110,11 +116,17 @@ class TableViewController: UITableViewController {
         } else {
             countries = allCountries[indexPath.row]
         }
-        cell.countryName.text = countries.name
+        cell.countryName.text = countries.name.common
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        nativeName.removeAll()
+        languages.removeAll()
+        countryCode.removeAll()
+        translate.removeAll()
+        latLong.removeAll()
+        currency.removeAll()
         if segue.identifier == "ShowCountryInfo" {
             let controller = segue.destination as! ViewController
             if let index = tableView.indexPathForSelectedRow {
@@ -124,35 +136,78 @@ class TableViewController: UITableViewController {
                 } else {
                     country = allCountries[index.row]
                 }
-                controller.countryName = country.name
+                controller.countryName = country.name.common
                 controller.countryFlag = country.flags.png
-                controller.countryInfo.append(country.topLevelDomain)
-                controller.countryInfo.append([country.alpha2Code])
-                controller.countryInfo.append([country.alpha3Code])
-                controller.countryInfo.append(country.callingCodes)
-                controller.countryInfo.append([country.capital ?? ""])
-                controller.countryInfo.append(country.altSpellings ?? [""])
-                controller.countryInfo.append([country.subregion])
-                controller.countryInfo.append([country.region.rawValue])
-                controller.countryInfo.append([String(country.population)])
-                controller.countryInfo.append([String(String(describing: country.latlng!))])
-                controller.countryInfo.append([country.demonym!])
-                controller.countryInfo.append([String(country.area!)])
-                controller.countryInfo.append([String(country.gini ?? 0)])
-                controller.countryInfo.append(country.timezones)
-                controller.countryInfo.append(country.borders ?? [""])
-                controller.countryInfo.append([country.nativeName])
-                controller.countryInfo.append([country.numericCode])
-                controller.countryInfo.append([String(describing: country.currencies)])
-                controller.countryInfo.append([String(describing: country.languages)])
-                controller.countryInfo.append([String(describing: country.translations)])
-                controller.countryInfo.append([String(describing: country.regionalBlocs)])
+                
+                for element in country.name.nativeName!.values {
+                    nativeName.append(String(element.official))
+                }
+                controller.countryInfo.append(nativeName.sorted())
+                controller.countryInfo.append(country.tld ?? [""])
+                controller.countryInfo.append([country.cca2])
+                controller.countryInfo.append([country.cca3])
+                controller.countryInfo.append([String(country.ccn3 ?? "")])
                 controller.countryInfo.append([country.cioc ?? ""])
                 if country.independent == true {
                     controller.countryInfo.append(["Yes"])
                 } else {
                     controller.countryInfo.append(["No"])
                 }
+                if country.status.rawValue == "officially-assigned" {
+                    controller.countryInfo.append(["Officially assigned"])
+                } else {
+                    controller.countryInfo.append(["User assigned"])
+                }
+                
+                if country.unMember == true {
+                    controller.countryInfo.append(["Yes"])
+                } else {
+                    controller.countryInfo.append(["No"])
+                }
+                currency.append(contentsOf: [String((country.currencies?.afn!.name)!)])
+                currency.append(contentsOf: [String((country.currencies?.afn!.symbol)!)])
+                controller.countryInfo.append(currency)
+                //                controller.countryInfo.append([String(country.currencies.debugDescription)])
+                countryCode.append(country.idd.root!)
+                countryCode.append(contentsOf: country.idd.suffixes!)
+                controller.countryInfo.append([countryCode.joined(separator: " ")])
+                controller.countryInfo.append(country.capital ?? [""])
+                controller.countryInfo.append(country.altSpellings)
+                controller.countryInfo.append([country.region.rawValue])
+                controller.countryInfo.append([String(country.subregion ?? "")])
+                for element in country.languages!.values {
+                    languages.append(element)
+                }
+                controller.countryInfo.append(languages.sorted())
+                if let translations = country.translations["rus"] {
+                    translate.append(translations.official)
+                }
+                if let translations = country.translations["deu"] {
+                    translate.append(translations.official)
+                }
+                if let translations = country.translations["fra"] {
+                    translate.append(translations.official)
+                }
+                translate.sort { (lhs: String, rhs: String) -> Bool in
+                    return lhs > rhs
+                }
+                translate = translate.map { $0.capitalized}
+                controller.countryInfo.append(translate)
+                for element in country.latlng {
+                    latLong.append(String(element))
+                }
+                controller.countryInfo.append(latLong)
+                if country.landlocked == true {
+                    controller.countryInfo.append(["Yes"])
+                } else {
+                    controller.countryInfo.append(["No"])
+                }
+                controller.countryInfo.append(country.borders ?? [""])
+                controller.countryInfo.append([String(country.area)])
+                for element in ([String((country.demonyms?.eng.m)!)]) {
+                    controller.countryInfo.append([element])
+                }
+                controller.countryInfo.append([String(country.population)])
             }
         }
     }
@@ -169,7 +224,7 @@ extension TableViewController: UISearchResultsUpdating {
     }
     func filterContentForSearchText(_ searchText: String) {
         filteredCountries = allCountries.filter({ (allCountries: CountryElement) -> Bool in
-            return allCountries.name.lowercased().contains(searchText.lowercased())
+            return allCountries.name.common.lowercased().contains(searchText.lowercased())
         })
         tableView.reloadData()
     }
