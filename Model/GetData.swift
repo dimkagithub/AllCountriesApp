@@ -10,7 +10,7 @@ import UIKit
 var allCountries = [CountryElement]()
 
 func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escaping() -> Void, serverErrorCallBack: @escaping() -> Void) {
-    let urlString = "https://restcountries.com/v2/all"
+    let urlString = "https://restcountries.com/v3.1/all"
     let configuration = URLSessionConfiguration.ephemeral
     let session = URLSession(configuration: configuration)
     guard let url = URL(string: urlString) else {
@@ -22,6 +22,7 @@ func getData(_ completion: @escaping() -> Void, JSONerrorAlertCallBack: @escapin
         guard error == nil else { return }
         do {
             allCountries = try JSONDecoder().decode([CountryElement].self, from: data)
+            allCountries.sort(by: { $0.name.common < $1.name.common } )
         } catch _ {
             JSONerrorAlertCallBack()
         }
